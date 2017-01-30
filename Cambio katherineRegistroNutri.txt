@@ -1,0 +1,130 @@
+﻿
+// MODIFICAR EL SIGUIENTE METODO DE LA SIGUIENTE MANERA  
+ private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {                                           
+        // TODO add your handling code here:
+        RegistroNutricional rn = new RegistroNutricional(indexTabla);
+        rn.setVisible(true);
+        this.dispose();
+    }  
+ // Se debe remplazar el metodo RegistroNutricional completament, Se implemento la validacion de campos (ventana Registro Nutricional)
+    public RegistroNutricional(String Cedula) {
+        initComponents();
+        ImageIcon imagenfondo1 = new ImageIcon("src/imagenes/574.png");
+        ImageIcon imagenfondo2 = new ImageIcon("src/imagenes/574.png");
+        ImageIcon imagenfondo3 = new ImageIcon("src/imagenes/574.png");
+        ImageIcon imagenfondo4 = new ImageIcon("src/imagenes/574.png");
+        ImageIcon imagenfondo5 = new ImageIcon("src/imagenes/574.png");
+        ImageIcon imagenfondo6 = new ImageIcon("src/imagenes/574.png");
+        ImageIcon imagenfondo7 = new ImageIcon("src/imagenes/574.png");
+        ImageIcon imagenfondo8 = new ImageIcon("src/imagenes/574.png");
+        ImageIcon imagenfondo9 = new ImageIcon("src/imagenes/574.png");
+        Icon icono1 = new ImageIcon(imagenfondo1.getImage().getScaledInstance(jLabel52.getWidth(), jLabel52.getHeight(), Image.SCALE_DEFAULT));
+        Icon icono2 = new ImageIcon(imagenfondo2.getImage().getScaledInstance(jLabel43.getWidth(), jLabel43.getHeight(), Image.SCALE_DEFAULT));
+        Icon icono3 = new ImageIcon(imagenfondo3.getImage().getScaledInstance(jLabel42.getWidth(), jLabel42.getHeight(), Image.SCALE_DEFAULT));
+        Icon icono4 = new ImageIcon(imagenfondo4.getImage().getScaledInstance(jLabel44.getWidth(), jLabel44.getHeight(), Image.SCALE_DEFAULT));
+        Icon icono5 = new ImageIcon(imagenfondo5.getImage().getScaledInstance(jLabel499.getWidth(), jLabel499.getHeight(), Image.SCALE_DEFAULT));
+        Icon icono6 = new ImageIcon(imagenfondo6.getImage().getScaledInstance(jLabel21.getWidth(), jLabel21.getHeight(), Image.SCALE_DEFAULT));
+        Icon icono7 = new ImageIcon(imagenfondo7.getImage().getScaledInstance(jLabel81.getWidth(), jLabel81.getHeight(), Image.SCALE_DEFAULT));
+        Icon icono8 = new ImageIcon(imagenfondo8.getImage().getScaledInstance(jLabel48.getWidth(), jLabel48.getHeight(), Image.SCALE_DEFAULT));
+        Icon icono9 = new ImageIcon(imagenfondo9.getImage().getScaledInstance(jLabel110.getWidth(), jLabel110.getHeight(), Image.SCALE_DEFAULT));
+        jLabel52.setIcon(icono1);
+        jLabel43.setIcon(icono2);
+        jLabel42.setIcon(icono3);
+        jLabel44.setIcon(icono4);
+        jLabel499.setIcon(icono5);
+        jLabel21.setIcon(icono6);
+        jLabel81.setIcon(icono7);
+        jLabel48.setIcon(icono8);
+        jLabel110.setIcon(icono9);
+        
+        // Validacion de textos 2017/01/28 KP
+        //Campos solo textos 
+        metodoscomunes.SoloLetras(txtAlergiaAlimenticia);
+        metodoscomunes.SoloLetras(txtAlimentosDesagradan);
+        metodoscomunes.SoloLetras(txtAlimentosMayorFrecuencia);
+        metodoscomunes.SoloLetras(txtConsumeAlimentosFueraCasa);
+        /*Ventana Actividad Fisica*/
+        metodoscomunes.SoloLetras(txtOcupacion);
+        metodoscomunes.SoloLetras(txtActividad);
+        metodoscomunes.SoloLetras(txtProfesion);
+        metodoscomunes.SoloLetras(txtTipoDepor);
+        metodoscomunes.SoloLetras(txtFrecDepor);
+        metodoscomunes.SoloNumeros(txtTiempoDepor);
+        /*Ventana tratamiento*/
+        metodoscomunes.SoloLetrasArea(txtTratamiento);
+        /*Ventana */
+        metodoscomunes.SoloLetrasArea(txtDiagnosticoNutri);
+        /*Ventana DN*/
+        metodoscomunes.SoloLetrasArea(txtDiagnosticoNutri);
+        /*Ventana Descripción*/
+        metodoscomunes.SoloLetrasArea(txtDescripcion);
+        /*Ventana DA*/
+        /// metodoscomunes.SoloLetrasArea(txtHistoriaAlimenticia);
+        metodoscomunes.SoloNumeros(txtPesoActual);
+        metodoscomunes.SoloNumeros(txtPesoHabitual);
+        metodoscomunes.SoloNumeros(txtPesoIdeal);
+        metodoscomunes.SoloNumeros(txtTalla);
+        metodoscomunes.SoloNumeros(txtPesoAumento);
+        metodoscomunes.SoloNumeros(txtDisminucion);
+        metodoscomunes.SoloLetras(txtContexOsea);
+        metodoscomunes.SoloNumeros(txtCMB);
+        metodoscomunes.SoloNumeros(txtBiceps);
+        metodoscomunes.SoloNumeros(txtTriceps);
+        metodoscomunes.SoloNumeros(txtSubescapular);
+        metodoscomunes.SoloNumeros(txtSuprailiaco);
+        metodoscomunes.SoloNumeros(txtCin_Cad);
+        metodoscomunes.SoloNumeros(txtCintura);
+        metodoscomunes.SoloNumeros(txtCadera);
+        /*Ventana DNParte1*/
+        metodoscomunes.SoloLetras(txtAlimentosMayorFrecuencia);
+        metodoscomunes.SoloLetras(txtAlergiaAlimenticia);
+        metodoscomunes.SoloLetras(txtAlimentosDesagradan);
+        metodoscomunes.SoloLetras(txtPersonaPreparaSirveAlimentos);
+        /*Ventana DNParte2*/
+        metodoscomunes.SoloLetras(txtSuplemetosVitaminicos);
+        metodoscomunes.SoloLetras(txtConsumeSalados);
+        metodoscomunes.SoloLetras(txtConsumeFrecuenciaFritaras);
+        metodoscomunes.SoloLetras(txtFrecuenciaEnlatados);
+        /*Ventana DNParte3*/
+        metodoscomunes.SoloLetras(txtConsumeFrecuenciaEmbidos);
+        metodoscomunes.SoloLetras(txtComeFrutas);
+        metodoscomunes.SoloLetras(txtConsumeSalados);
+        metodoscomunes.SoloLetras(txtConsumeGaseosas);
+        metodoscomunes.SoloLetras(txtProblemasGastrointentinales);
+        metodoscomunes.SoloLetras(txtOtrosProblemasSalud);
+        /*historial alime*/
+        metodoscomunes.SoloNumeros(txtUnidadDesayuno);
+        metodoscomunes.SoloNumeros(txtUnidad12Manana);
+        metodoscomunes.SoloNumeros(txtUnidadAlmuerzo);
+        metodoscomunes.SoloNumeros(txtUnidad12Tarde);
+        metodoscomunes.SoloNumeros(txtUnidadMerienda);
+        metodoscomunes.SoloNumeros(txtUnidadRefigerio);
+        metodoscomunes.SoloNumeros(txtUnidadExtra);
+        metodoscomunes.SoloNumeros(txtMedidaCaseraDesayuno);
+        metodoscomunes.SoloNumeros(txtMedidaCasera12Manana);
+        metodoscomunes.SoloNumeros(txtMedidaCaseraAlmuerzo);
+        metodoscomunes.SoloNumeros(txtMedidaCasera12Tarde);
+        metodoscomunes.SoloNumeros(txtMedidaCaseraMerienda);
+        metodoscomunes.SoloNumeros(txtMedidaCaseraRefrigerio);
+        metodoscomunes.SoloNumeros(txtMedidaCaseraExtra);
+        metodoscomunes.SoloNumeros(txtGramosDesayuno);
+        metodoscomunes.SoloNumeros(txtGramos12Manana);
+        metodoscomunes.SoloNumeros(txtGramosAlmuerzo);
+        metodoscomunes.SoloNumeros(txtGramos12Tarde);
+        metodoscomunes.SoloNumeros(txtGramosMerienda);
+        metodoscomunes.SoloNumeros(txtGramosRefrigerio);
+        metodoscomunes.SoloNumeros(txtGramosExtra);
+        metodoscomunes.SoloNumeros(txtAlimentosDesayuno);
+        metodoscomunes.SoloNumeros(txtAlimentos12Manana);
+        metodoscomunes.SoloNumeros(txtAlimentosAlmuerzo);
+        metodoscomunes.SoloNumeros(txtAlimentos12Tarde);
+        metodoscomunes.SoloNumeros(txtAlimentosMerienda);
+        metodoscomunes.SoloNumeros(txtAlimentosRefrigerio);
+        metodoscomunes.SoloNumeros(txtAlimentosExtra);
+
+         if (!Cedula.isEmpty()) 
+            txtCedula.setText(Cedula);
+       
+        this.repaint();
+        this.setLocationRelativeTo(null);
+    }

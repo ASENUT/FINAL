@@ -1,0 +1,150 @@
+  // MODIFICAR EL SIGUIENTE METODO DE LA SIGUIENTE MANERA 
+  private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {                                           
+        // TODO add your handling code here:
+        RegistroCosmetologico rc = new RegistroCosmetologico(indexTabla);
+        rc.setVisible(true);
+        this.dispose();
+    }  
+  // Se desactivo el tab diagnostico facial con el fin de que no se pueda ingresar una imagen sin una cedula valida , se debe copiar todo el metodo en la ventana RegistroCosmetologico  29/01/2017
+private MetodoComunes mc = new MetodoComunes();
+  public RegistroCosmetologico() {
+        initComponents();
+        ImageIcon imagenvisto = new ImageIcon("src/imagenes/574.png");
+        Icon iconovisto = new ImageIcon(imagenvisto.getImage().getScaledInstance(jLabel13.getWidth(), jLabel13.getHeight(), Image.SCALE_DEFAULT));
+        Icon iconovisto2 = new ImageIcon(imagenvisto.getImage().getScaledInstance(jLabel42.getWidth(), jLabel42.getHeight(), Image.SCALE_DEFAULT));
+        jLabel13.setIcon(iconovisto);
+        jLabel42.setIcon(iconovisto2);
+        this.repaint();
+        this.setLocationRelativeTo(null);
+      jTabbedPane1.setEnabledAt(2, false);// Tab Diagnostico facial
+      
+    }
+	  
+// Se implemento la copia de la imagen selecciona de una forma organizada, se debe copiar todo el metodo en la ventana RegistroCosmetologico  29/01/2017
+
+//OJO SE DEBE IMPORTAR TODAS LA LIBRERIAS QUE PROPORCIONA EL NETBEANS CON EL FIN DE NO GENERAR ERRORES.
+private void jLabel27MouseClicked(java.awt.event.MouseEvent evt) {                                      
+        // TODO add your handling code here:
+        
+        DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+        Date date = new Date();
+        String fecha= dateFormat.format(date);
+        int resultado;
+        chooser vnt = new chooser();
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter("jpg", "png");
+        chooser.jfchCargarfoto.setFileFilter(filtro);
+        resultado = chooser.jfchCargarfoto.showOpenDialog(vnt);
+        //Creacion de Carpeta KP
+        String path="c:\\cosmetologia\\imagenes\\"+txtCedula.getText()+"";
+        File folder = new File(path);        
+        if (!folder.exists()) folder.mkdir();
+           
+        if (JFileChooser.APPROVE_OPTION == resultado) {
+         //Creacion y copiar de documentos con la siguiente nomenglatura cedula_fechaHora(yyyyMMddHHmmss).extension KP. 30/01/2017
+            fichero = chooser.jfchCargarfoto.getSelectedFile();
+            String path1="c:\\cosmetologia\\imagenes\\"+txtCedula.getText()+"\\"+txtCedula.getText()+"_"+fecha+"."+mc.getFileExtension(fichero)+"";
+            folder = new File(path1);
+            try {
+                mc.copiarArchivos(fichero, folder);
+            } catch (IOException ex) {
+            Logger.getLogger(RegistroCosmetologico.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            try {
+                ImageIcon icon = new ImageIcon(fichero.toString());
+                Icon icono = new ImageIcon(icon.getImage().getScaledInstance(jLabel27.getWidth(), jLabel27.getHeight(), Image.SCALE_DEFAULT));
+                jLabel27.setText(null);
+                jLabel27.setIcon(icono);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Error abriendo la                   imagen " + ex);
+
+            }
+
+        }
+    }
+	
+	// Se implento una funcionalidad para que solo se pueda ingresar una imagen cuando se haya ingresado una cedula validad(Metodos Nuevos), se debe copiar todo el metodo en la ventana RegistroCosmetologico  29/01/2017 (OJO DE DEBE CREAR EL EVENTO txtCedulaKeyTyped)
+   private void txtCedulaKeyTyped(java.awt.event.KeyEvent evt) {                                   
+        // TODO add your handling code here:
+                if(isUsuario()>0)  jTabbedPane1.setEnabledAt(2, true);
+				else jTabbedPane1.setEnabledAt(2, false);
+   }
+// Metodo para saber si existe usuario con una cedula
+    int isUsuario() {
+        ResultSet rs;
+   try {
+            String query = "SELECT  P.CEDULA AS rowcount"
+                            + " FROM PACIENTE P"
+                            + " WHERE  P.CEDULA = '"+txtCedula.getText()+"'";
+            rs = ventanas.Conexion.link.createStatement().executeQuery(query);
+           while( rs.next()){
+           return  rs.getInt("rowcount");
+           }; 
+           return 0;
+        
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Existio un problema revise el listado de usuarios");
+            return 0;
+           }
+    }	
+///  Metodos para insertar o y actualizar IMAGEN PARA ESTO SE IMPLEMENTO  una funcionalidad nueva (se debe manejar una logica difirente de negocio donde un paciente pueda tener una imagen actual y varias imagenes historicas estas pueden ser de diferentes  tipos cosmetologica y nutricional.)
+	
+	  boolean InsertarImagen() {
+  
+        Conexion.Conectar();
+        PreparedStatement pst;
+        try {
+            String query = "INSERT INTO imagen_paciente (URL_IMAGEN, TPO_TRA_IMAGEN, EST_IMAGEN, CEDULA) "
+                           +" VALUES (?, ?, ?, ?) ";
+            pst = Conexion.link.prepareStatement(query);
+            pst.setString(1, urlImage);
+            pst.setString(2, "C");
+            pst.setInt(3, 1);
+            pst.setString(4, txtCedula.getText());
+            pst.execute();
+
+        } catch (SQLException ex) {
+            Logger logger = Logger.getLogger("My Log");
+            return false;
+        }
+
+        return true;
+    }
+     boolean UpdateEstadoImagen() {
+  
+        Conexion.Conectar();
+        PreparedStatement pst;
+        try {
+                String query = "UPDATE imagen_paciente"
+                           +" INNER JOIN  (SELECT MAX(i.COD_IMAGEN_PACIENTE) AS COD"
+                           +" FROM imagen_paciente i"
+                           +" WHERE i.CEDULA= ?) maxpaciente on maxpaciente.cod<>imagen_paciente.COD_IMAGEN_PACIENTE "
+                           +" SET imagen_paciente.EST_IMAGEN=0 "
+                           +" where  imagen_paciente.CEDULA= ? AND imagen_paciente.TPO_TRA_IMAGEN='C' ";
+            pst = Conexion.link.prepareStatement(query);
+            pst.setString(1, txtCedula.getText());
+            pst.setString(2, txtCedula.getText());
+            
+            pst.execute();
+
+        } catch (SQLException ex) {
+            Logger logger = Logger.getLogger("My Log");
+            return false;
+        }
+
+        return true;
+    }
+	// se debe crear un boton guardad en la ventana de ingreso de imagen y inserta el codigo.
+	 private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        // TODO add your handling code here:
+        
+            if (InsertarImagen()) {
+                JOptionPane.showMessageDialog(null, "Se inserto la imagen correctamente");
+                UpdateEstadoImagen();
+            } else {
+                JOptionPane.showMessageDialog(null, "No se puedo insertar la imagen");
+            }
+            
+       
+    }    
+         	
